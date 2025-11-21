@@ -1,25 +1,29 @@
-import java.util.*;
-
 class Solution {
     public boolean isPossible(int[] target) {
-        long sum = 0;
+        int n = target.length;
         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        long sum = 0;
 
-        for (int x : target) {
-            sum += x;
-            pq.offer(x);
+        for (int num : target) {
+            sum += num;
+            pq.offer(num);
         }
 
         while (true) {
             int max = pq.poll();
             long rest = sum - max;
 
-            if (max == 1 || rest == 1) return true; // all ones possible
-            
-            if (rest == 0 || rest >= max) return false;
+            if (rest == 1 || max == 1) {
+                return true;
+            }
+            if (rest == 0 || rest >= max) {
+                return false;
+            }
 
             long prev = max % rest;
-            if (prev == 0) return false;
+            if (prev == 0) {
+                return false;
+            }
 
             sum = rest + prev;
             pq.offer((int) prev);
